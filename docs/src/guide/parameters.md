@@ -4,35 +4,45 @@ Pattern [`parameters`](../API/pattern.md#parameter) allow user controlled parame
 
 Input parameters can be accessed in dynamic `pulse`, `gate`, `event` or `cycle` function [`contexts`](../API/pattern.md#EventContext).
 
+---
+
 ## Parameter Types
 
-Currenty available parameter types are:
+Currently available parameter types are:
 
-- boolean - on/off switches - [`parameter.boolean`](../API/parameter.md#boolean)
-- integer - integer value ranges - [`parameter.integer`](../API/parameter.md#integer)
-- number - real number value ranges -[`parameter.number`](../API/parameter.md#number)
-- string - enumeration value sets - [`parameter.enum`](../API/parameter.md#enum)
+| Type | Description | API Reference |
+|------|-------------|---------------|
+| **`boolean`** | on/off switches | [`parameter.boolean`](../API/parameter.md#boolean) |
+| **`integer`** | integer value ranges | [`parameter.integer`](../API/parameter.md#integer) |
+| **`number`** | real number value ranges | [`parameter.number`](../API/parameter.md#number) |
+| **`string`** | enumeration value sets | [`parameter.enum`](../API/parameter.md#enum) |
 
-## Parameter access
- 
-When defining a parameter, each parameter has a unique string id set. This id is used to access the *actual* paramter value in the function contexts.
+---
 
-Definition:
+## Parameter Access
 
-» `parameter = { parameter.boolean("enabled", true) }`
+When defining a parameter, each parameter has a unique string id set. This id is used to access the *actual* parameter value in the function contexts.
 
-Usage:
+### Definition Syntax
+```lua
+parameter = { parameter.boolean("enabled", true) }
+```
 
-» `event = function(context) return context.parameter.enabled and "c5" or nil }`
+### Usage Examples
+```lua
+-- Standard access
+event = function(context) return context.parameter.enabled and "c5" or nil end
 
-Usage, if you've got spaces in your ids (not recommended):
+-- Access with spaces in IDs (not recommended)
+event = function(context) return context.parameter["enabled"] and "c5" or nil end
+```
 
-» `event = function(context) return context.parameter["enabled"] and "c5" or nil }`
-
+---
 
 ## Examples
 
-Euclidean pattern generator with user configurable steps, pulses, offset value.
+### Euclidean Pattern Generator
+User configurable steps, pulses, and offset values
 
 ```lua
 return pattern {
@@ -55,8 +65,9 @@ return pattern {
 }
 ```
 
+### Random Bass Line Generator
+Custom scales and variations (seeds) for dynamic bass patterns
 
-Random bass line generator with user defined custom scales and variations (seeds).
 ```lua
 local scales = {"Chromatic", "Minor", "Major"}
 return pattern {
@@ -81,7 +92,9 @@ return pattern {
 }
 ```
 
-Drum pattern cycle with configurable note values for each drumkit instrument. 
+### Drum Pattern Cycle
+Configurable note values for each drumkit instrument
+
 ```lua
 return pattern {
   unit = "1/1",
@@ -106,3 +119,5 @@ return pattern {
   end)
 }
 ```
+
+---
